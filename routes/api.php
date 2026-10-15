@@ -1,21 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ItemController;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\ItemController;
-
+use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
     try {
         DB::connection()->getPdo();
+
         return response()->json([
             'status' => 'ok',
-            'database' => 'connected'
-        ], 200);
-    } catch (\Exception $e) {
+            'database' => 'connected',
+        ]);
+    } catch (Throwable $exception) {
         return response()->json([
             'status' => 'error',
-            'database' => 'disconnected'
+            'database' => 'disconnected',
         ], 503);
     }
 });
